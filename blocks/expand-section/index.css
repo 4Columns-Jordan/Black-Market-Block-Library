@@ -1,0 +1,62 @@
+/* === Custom Block Styling === */
+.expandSection {
+  height: 100vh;
+  position: relative;
+  overflow: hidden;
+  border: none;
+}
+.expandSection__bg {
+  position: absolute;
+  inset: 0;
+  z-index: -10;
+}
+.expandSection__bg img{
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+.expandSection__top {
+  height: var(--ES-tb-border-width);
+  width: 100%;
+  background-color: var(--ES-bg-color);
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 20;
+  transform: translateY(0);
+}
+.expandSection__right {
+  height: 100%;
+  width: var(--ES-side-border-width);
+  background-color: var(--ES-bg-color);
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 20;
+  transform: translateX(0px);
+}
+.expandSection__bottom {
+  height: var(--ES-tb-border-width);
+  width: 100%;
+  background-color: var(--ES-bg-color);
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  z-index: 20;
+  transform: translateY(0);
+}
+.expandSection__left {
+  height: 100%;
+  width: var(--ES-side-border-width);
+  background-color: var(--ES-bg-color);
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 20;
+  transform: translateX(0px);
+}
+.text {
+  color: #fff;
+  padding: 128px 0;
+}
