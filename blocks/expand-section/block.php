@@ -1,59 +1,47 @@
-/* === Custom Block Scripts === */
-jQuery(document).ready(function() {
-  setSideBorderProp();
-});
-jQuery(window).resize(function() {
-  setSideBorderProp();
-});
-jQuery(window).scroll(function () {
-  jQuery('.expandSection').each(function(){
-    let pct = getScrollPercent(jQuery(this));
-    jQuery(this).find(".expandSection__top").css({
-      transform: "translateY( " + pct * -1 + "%)",
-    });
-    jQuery(this).find(".expandSection__right").css({
-      transform: "translateX( " + pct + "%)",
-    });
-    jQuery(this).find(".expandSection__bottom").css({
-      transform: "translateY( " + pct + "%)",
-    });
-    jQuery(this).find(".expandSection__left").css({
-      transform: "translateX( " + pct * -1 + "%)",
-    });
-    if (pct === 100) {
-      jQuery(this).addClass('expanded');
-    } else {
-      jQuery(this).removeClass('expanded');
-    }
-  });
-});
+<?php
 
-function getScrollPercent(element) {
-  const scrollDistance = jQuery(window).scrollTop() + jQuery(window).height() / 2;
-  const elementDistance =
-    element.offset().top + element.outerHeight() / 2;
-  const distance = elementDistance - scrollDistance;
-  const windowHeight = jQuery(window).height();
-  const triggerDistance = windowHeight / 2;
-  let scrollPercent = 0;
+/**
+ * Custom Block Template
+ *
+ * @param   array $block The block settings and attributes.
+ * @param   string $content The block inner HTML (empty).
+ * @param   bool $is_preview True during AJAX preview.
+ * @param   (int|string) $post_id The post ID this block is saved to.
+ */
 
-  if (distance <= triggerDistance && distance >= 0) {
-    scrollPercent = (1 - distance / triggerDistance) * 100;
-  } else if (distance < 0 && distance >= -triggerDistance) {
-    scrollPercent = 100;
-  }
-
-  if (jQuery(window).scrollTop() > element.offset().top) {
-    scrollPercent = 100;
-  }
-
-  return scrollPercent;
+// Create id attribute allowing for custom "anchor" value.
+$id = 'custom-block-' . $block['id'];
+if( !empty($block['anchor']) ) {
+    $id = $block['anchor'];
 }
 
-function setSideBorderProp() {
-  const jQuerycontainer = jQuery('.container');
-  const containerWidth = jQuerycontainer.outerWidth();
-  const viewportWidth = jQuery(window).width();
-  const whitespace = (viewportWidth - containerWidth) / 2;
-  jQuery('.expandSection').css('--ES-side-border-width', whitespace + 'px');
+// Create class attribute allowing for custom "className" and "align" values.
+
+$className = 'expandSection';
+if( !empty($block['className']) ) {
+    $className .= ' ' . $block['className'];
 }
+if( !empty($block['align']) ) {
+    $className = ' align' . $block['align'] . ' ' . $className;
+}
+// === Global Settings
+include __DIR__ . ('/../globalSettings.php');
+
+$borderColor = get_field('border_color') ?: '#fff';
+$tbBorderWidth = get_field('top_border_width') ?: '128px';
+?>
+
+<section id="<?php echo esc_attr($id); ?>" class="<?php echo esc_attr($className); ?>" style="--ES-bg-color: <?php echo $borderColor; ?>; --ES-tb-border-width: <?php echo $tbBorderWidth; ?>">
+  <div class="expandSection__bg">
+    <picture>
+      <img src="<?php echo get_field('background_image')['url']; ?>" alt="">
+    </picture>
+    <div class="expandBorder expandSection__top"></div>
+    <div class="expandBorder expandSection__right"></div>
+    <div class="expandBorder expandSection__bottom"></div>
+    <div class="expandBorder expandSection__left"></div>
+  </div>
+  <div class="container">
+    <InnerBlocks />
+  </div>
+</section>
