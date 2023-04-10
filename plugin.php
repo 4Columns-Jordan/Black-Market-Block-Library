@@ -33,5 +33,17 @@ function BML__init_blocks()
         'keywords' => ['content', 'image'],
         'supports' => ['jsx' => true]
     ]);
+    acf_register_block_type([
+      'name'        => 'mosaicBlock',
+      'title'       => __('Mosaic Block'),
+      'description' => __('A mosaic Block'),
+      'render_template' => plugin_dir_path( __FILE__ ) . 'blocks/mosaic-grid/block.php',
+      'enqueue_style' => plugins_url('/blocks/mosaic-grid/index.css', __FILE__),
+      'enqueue_assets' => function(){
+        
+      },
+      'icon'            => 'editor-alignleft',
+      'keywords'        => ['content', 'image'],
+    ]);
   }
 }

@@ -1,0 +1,13 @@
+/* === Custom Block Styling === */
+.grid-sizer,
+.grid-item {
+  width: 33.333%;
+}
+.grid-item {
+  padding: 4px;
+  box-sizing: border-box;
+}
+.grid-item img{
+  width: 100%;
+  max-width: 100%;
+}
