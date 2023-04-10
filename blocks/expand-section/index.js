@@ -6,30 +6,32 @@ jQuery(window).resize(function() {
   setSideBorderProp();
 });
 jQuery(window).scroll(function () {
-  let pct = getScrollPercent(".expandSection");
-  jQuery(".expandSection__top").css({
-    transform: "translateY( " + pct * -1 + "%)",
+  jQuery('.expandSection').each(function(){
+    let pct = getScrollPercent(jQuery(this));
+    jQuery(this).find(".expandSection__top").css({
+      transform: "translateY( " + pct * -1 + "%)",
+    });
+    jQuery(this).find(".expandSection__right").css({
+      transform: "translateX( " + pct + "%)",
+    });
+    jQuery(this).find(".expandSection__bottom").css({
+      transform: "translateY( " + pct + "%)",
+    });
+    jQuery(this).find(".expandSection__left").css({
+      transform: "translateX( " + pct * -1 + "%)",
+    });
+    if (pct === 100) {
+      jQuery(this).addClass('expanded');
+    } else {
+      jQuery(this).removeClass('expanded');
+    }
   });
-  jQuery(".expandSection__right").css({
-    transform: "translateX( " + pct + "%)",
-  });
-  jQuery(".expandSection__bottom").css({
-    transform: "translateY( " + pct + "%)",
-  });
-  jQuery(".expandSection__left").css({
-    transform: "translateX( " + pct * -1 + "%)",
-  });
-  if (pct === 100) {
-    jQuery('.expandSection').addClass('expanded');
-  } else {
-    jQuery('.expandSection').removeClass('expanded');
-  }
 });
 
 function getScrollPercent(element) {
   const scrollDistance = jQuery(window).scrollTop() + jQuery(window).height() / 2;
   const elementDistance =
-    jQuery(element).offset().top + jQuery(element).outerHeight() / 2;
+    element.offset().top + element.outerHeight() / 2;
   const distance = elementDistance - scrollDistance;
   const windowHeight = jQuery(window).height();
   const triggerDistance = windowHeight / 2;
@@ -41,7 +43,7 @@ function getScrollPercent(element) {
     scrollPercent = 100;
   }
 
-  if (jQuery(window).scrollTop() > jQuery(element).offset().top) {
+  if (jQuery(window).scrollTop() > element.offset().top) {
     scrollPercent = 100;
   }
 
